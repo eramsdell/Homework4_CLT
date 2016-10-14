@@ -1,0 +1,69 @@
+---
+title: "Bootstrap"
+author: "Elizabeth Ramsdell"
+date: "October 14, 2016"
+output: 
+  html_document:
+  keep_md: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+The Central Limit Theorum says that the means of samples from any distribution are normally distributed if the sample size is large enough. By using bootstrap, we can sample and resample from samples acting as populations, demonstrating this theory
+
+```{r}
+
+##These 2 histograms show that the distribution of means of samples from a normal distrbution are also normally distributed. This supports the CLT. 
+
+x <- rnorm(50)
+xbar <- mean(x)
+nsims <- 1000
+bootnorm_n50 <- numeric(nsims)
+for(i in 1:nsims){
+temp <- sample(x,50,replace=TRUE)
+bootnorm_n50[i] <- mean(temp)}
+
+
+x <- rnorm(100)
+xbar <- mean(x)
+nsims <- 1000
+bootnorm_n100 <- numeric(nsims)
+for(i in 1:nsims){
+temp <- sample(x,100,replace=TRUE)
+bootnorm_n100[i] <- mean(temp)}
+
+hist(bootnorm_n50)
+hist(bootnorm_n100)
+
+##These 2 histograms show that the distribution of means of samples from non-normal distributions approach a normal distribution as the sample size gets larger. 
+
+
+
+x <- rexp(50)
+xbar <- mean(x)
+nsims <- 1000
+bootexp_n50 <- numeric(nsims)
+for(i in 1:nsims){
+temp <- sample(x,50,replace=TRUE)
+bootexp_n50[i] <- mean(temp)}
+
+x <- rexp(100)
+xbar <- mean(x)
+nsims <- 1000
+bootexp_n100 <- numeric(nsims)
+for(i in 1:nsims){
+temp <- sample(x,100,replace=TRUE)
+bootexp_n100[i] <- mean(temp)}
+
+hist(bootnorm_n50)
+hist(bootexp_n100)
+
+
+
+```
+
+
